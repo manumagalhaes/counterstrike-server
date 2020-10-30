@@ -1,8 +1,8 @@
-# CounterStrike 1.6 Server
+# FTP Server
 
-![cs-logo](logo.jpg)
+![ftp-logo](ftp.jpg)
 
-Spin up a Dockerised Counterstrike 1.6 server in AWS to keep team entertained during Covid-19 crisis.
+Spin up a Dockerised FTP server in AWS to replace old physical server.
 
 ## Architecture
 
@@ -24,5 +24,8 @@ Spin up a Dockerised Counterstrike 1.6 server in AWS to keep team entertained du
 
 ## TODO
 
-- [ ] move cs server password to parameter store
-- [ ] create scripts to turn server on/off by incr/decr asg min val
+- [ ] add ElasticIP 
+- [ ] add IAM role 
+
+<!-- - [ ] move cs server password to parameter store
+- [ ] create scripts to turn server on/off by incr/decr asg min val -->

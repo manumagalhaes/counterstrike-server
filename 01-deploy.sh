@@ -6,8 +6,8 @@ readonly RANDOM_NUM="${RANDOM}"
 readonly FILE_DIRECTORY=$(dirname "${BASH_SOURCE[0]}")
 readonly STACK_NAME="cs-gaming-${RANDOM_NUM}"
 readonly NOW=$(date +%Y-%m-%dT%H:%M:%S)
-readonly TAGS=("ApplicationName=cs-server" "Batch=batch-${RANDOM_NUM}" "DateCreation=${NOW}" "StackName=${STACK_NAME}" "Owner=jujhar@jujhar.com")
-readonly AWS_DEFAULT_REGION="eu-west-2"
+readonly TAGS=("ApplicationName=ftp-server" "Batch=batch-${RANDOM_NUM}" "DateCreation=${NOW}" "StackName=${STACK_NAME}" "Owner=manu")
+readonly AWS_DEFAULT_REGION="eu-west-1"
 
 # where shall I open ssh access from?
 readonly myIpAddress="$(curl -s https://ifconfig.me/)/32"
