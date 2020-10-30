@@ -24,8 +24,6 @@ Spin up a Dockerised FTP server in AWS to replace old physical server.
 
 ## TODO
 
-- [ ] add ElasticIP 
-- [ ] add IAM role 
-
-<!-- - [ ] move cs server password to parameter store
+- [ ] add ElasticIP
+- [ ] add IAM role
 - [ ] create scripts to turn server on/off by incr/decr asg min val -->
