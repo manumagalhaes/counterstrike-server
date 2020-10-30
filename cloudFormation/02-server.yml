@@ -49,28 +49,9 @@ Resources:
         - Description: Web from my current ip for testing
           IpProtocol: tcp
           FromPort: 80
-          ToPort: 80
-          CidrIp: !Sub "${myIpAddress}"
-        - Description: cs-1.6-svr UDP 26900
-          IpProtocol: udp
-          FromPort: 26900
-          ToPort: 26900
-          CidrIp: 0.0.0.0/0
-        - Description: cs-1.6-svr UDP 27020
-          IpProtocol: udp
-          FromPort: 27020
-          ToPort: 27020
-          CidrIp: 0.0.0.0/0
-        - Description: cs-1.6-svr UDP 27015
-          IpProtocol: udp
-          FromPort: 27015
-          ToPort: 27015
-          CidrIp: 0.0.0.0/0
-        - Description: cs-1.6-svr TCP 27015
-          IpProtocol: tcp
-          FromPort: 27015
-          ToPort: 27015
-          CidrIp: 0.0.0.0/0
+          ToPort: 21
+          CidrIp: !Sub "${myIpAddress}" //0.0.0.0:0
+     
       VpcId:
         Fn::ImportValue: !Sub "${stackName}-net-vpc"
       Tags:
