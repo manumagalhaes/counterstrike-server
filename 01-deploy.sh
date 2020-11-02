@@ -4,10 +4,14 @@
 
 readonly RANDOM_NUM="${RANDOM}"
 readonly FILE_DIRECTORY=$(dirname "${BASH_SOURCE[0]}")
-readonly STACK_NAME="cs-gaming-${RANDOM_NUM}"
+readonly STACK_NAME="my-ftp-${RANDOM_NUM}"
 readonly NOW=$(date +%Y-%m-%dT%H:%M:%S)
 readonly TAGS=("ApplicationName=ftp-server" "Batch=batch-${RANDOM_NUM}" "DateCreation=${NOW}" "StackName=${STACK_NAME}" "Owner=manu")
-readonly AWS_DEFAULT_REGION="eu-west-1"
+export AWS_DEFAULT_REGION="us-east-1"
+readonly AVAILABILITY_ZONE=${AWS_DEFAULT_REGION}a
+
+# If VPC already exists 
+readonly VPC_ID="add-vpc-id"
 
 # where shall I open ssh access from?
 readonly myIpAddress="$(curl -s https://ifconfig.me/)/32"
@@ -19,21 +23,21 @@ readonly UserDataScript=$(
   sed s/__RCON_PASSWORD__/Covid19Rcon/
 )
 
-echo "Deploying network ${STACK_NAME}"
-# deploy network
-aws cloudformation deploy \
-  --template-file "${FILE_DIRECTORY}/cloudFormation/01-networking.yml" \
-  --stack-name "${STACK_NAME}-net" \
-  --capabilities CAPABILITY_IAM \
-  --tags "${TAGS[@]}" \
-  --no-fail-on-empty-changeset \
-  --region "${AWS_DEFAULT_REGION}" \
-  --parameter-overrides \
-      stackName="${STACK_NAME}" \
-# have to wait for VPC  
-aws cloudformation wait \
-stack-exists \
---stack-name "${STACK_NAME}-net"
+# echo "Deploying network ${STACK_NAME}"
+# # deploy network
+# aws cloudformation deploy \
+#   --template-file "${FILE_DIRECTORY}/cloudFormation/01-networking.yml" \
+#   --stack-name "${STACK_NAME}-net" \
+#   --capabilities CAPABILITY_IAM \
+#   --tags "${TAGS[@]}" \
+#   --no-fail-on-empty-changeset \
+#   --region "${AWS_DEFAULT_REGION}" \
+#   --parameter-overrides \
+#       stackName="${STACK_NAME}" \
+# # have to wait for VPC  
+# aws cloudformation wait \
+# stack-exists \
+# --stack-name "${STACK_NAME}-net"
 
 echo "Finding the current Amazon Linuz 2 AMI"
 readonly LINUX2_AMI=$(
@@ -59,4 +63,6 @@ aws cloudformation deploy \
       stackName="${STACK_NAME}" \
       Linux2Ami="${LINUX2_AMI}" \
       UserDataScript="${UserDataScript}" \
-      myIpAddress="${myIpAddress}"
+      myIpAddress="${myIpAddress}" \
+      AvailabilityZone="${AVAILABILITY_ZONE}"  \
+      VpcId="${VPC_ID}"

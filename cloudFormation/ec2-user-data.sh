@@ -15,8 +15,9 @@ yum install -y \
 
 echo "Setting up ssh access"  | tee -a "${logName}"
 curl -s https://github.com/jujhars13.keys | tee -a /home/ec2-user/.ssh/authorized_keys
+curl -s https://github.com/manumagalhaes.keys | tee -a /home/ec2-user/.ssh/authorized_keys
 
-# add ec2 user to the docker group which allows docket to run without being a super-user
+# add ec2 user to the docker group which allows docker to run without being a super-user
 usermod -aG docker ec2-user
 
 # running docker daemon as a service
@@ -36,14 +37,6 @@ docker run -d \
     -v /home/ec2-user/webapp:/usr/share/nginx/html \
     -p 21:80 \
     nginx
-
-echo "get normal docker entrypoint" | tee -a "${logName}"
-# we want to override this from the docker container to customise it
-curl https://raw.githubusercontent.com/JimTouz/counter-strike-docker/master/hlds_run.sh -o /custom-entrypoint.sh
-sed -i '2 a rm -f /opt/hlds/cstrike/addons/amxmodx/configs/maps.ini' /custom-entrypoint.sh
-chmod +x /custom-entrypoint.sh
-
-
 
 echo "Finished $(date)" | tee -a "${logName}"
 

@@ -17,6 +17,10 @@ Parameters:
   instanceType:
     Type: String
     Default: t3.medium
+  AvailabilityZone:
+    Type: String
+  VpcId:
+    Type: String
 
 Resources:
 
@@ -48,12 +52,12 @@ Resources:
           CidrIp: !Sub "${myIpAddress}"
         - Description: Web from my current ip for testing FTP
           IpProtocol: tcp
-          FromPort: 80
+          FromPort: 21
           ToPort: 21
           CidrIp: !Sub "${myIpAddress}"
-     
       VpcId:
-        Fn::ImportValue: !Sub "${stackName}-vpc" # or string if VPC is already in place
+        !Ref VpcId
+        # Fn::ImportValue: !Sub "${stackName}-vpc"
       Tags:
         - Key: Name
           Value: !Sub "${AWS::StackName}-sg"
@@ -63,7 +67,8 @@ Resources:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
       AvailabilityZones: 
-        - eu-west-1a
+        - !Ref AvailabilityZone
+        # - eu-west-1a
       HealthCheckGracePeriod: 10 # in seconds
       HealthCheckType: EC2
       LaunchConfigurationName: !Ref FtpLauchConfig
@@ -76,7 +81,8 @@ Resources:
           Value: !Sub "${AWS::StackName}-ASG"
           PropagateAtLaunch: true
       VPCZoneIdentifier:
-        - Fn::ImportValue: !Sub "${stackName}-net-pub-subnet-a" # or list of string if already in place
+        - subnet-07b32998cce87442a
+        # - Fn::ImportValue: !Sub "${stackName}-net-pub-subnet-a" 
 
 # Exporting outputs to use in downstream stacks
 Outputs:
